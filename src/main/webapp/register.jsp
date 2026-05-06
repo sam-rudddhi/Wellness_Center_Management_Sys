@@ -323,7 +323,7 @@
             <p class="form-subtitle">Already registered? <a href="login.jsp">Sign in here</a></p>
         </div>
 
-        <form id="registerForm" action="RegisterServlet" method="post">
+        <form id="registerForm" action="RegisterServlet" method="post" novalidate>
             <!-- Personal Info -->
             <div class="section-label">Personal Information</div>
 

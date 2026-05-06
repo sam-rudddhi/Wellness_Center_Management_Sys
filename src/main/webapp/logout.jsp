@@ -5,7 +5,7 @@
     if (userSession != null) {
         userSession.invalidate();
     }
-
+    
     // Clear all cookies
     Cookie[] cookies = request.getCookies();
     if (cookies != null) {

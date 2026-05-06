@@ -230,6 +230,17 @@
         <div class="nav-logo">🌿</div>
         <div class="nav-name">Serenova</div>
     </div>
+    
+    <!-- Demo Links -->
+    <div style="display: flex; gap: 1.5rem; margin: 0 auto;">
+        <a href="sql-injection-demo.jsp" style="text-decoration: none; color: var(--stone); font-size: 0.85rem; transition: color 0.2s;" onmouseover="this.style.color='var(--sage-dark)'" onmouseout="this.style.color='var(--stone)'">
+            🔐 SQL Security
+        </a>
+        <a href="session-demo.jsp" style="text-decoration: none; color: var(--stone); font-size: 0.85rem; transition: color 0.2s;" onmouseover="this.style.color='var(--sage-dark)'" onmouseout="this.style.color='var(--stone)'">
+            🔑 Session Demo
+        </a>
+    </div>
+    
     <div class="nav-actions">
         <div class="nav-user">
             <div class="nav-avatar">JD</div>

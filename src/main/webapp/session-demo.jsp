@@ -4,10 +4,10 @@
     // ═══════════════════════════════════════════════════════════
     // SESSION MANAGEMENT DEMO
     // ═══════════════════════════════════════════════════════════
-
+    
     // Create or retrieve session attributes
     HttpSession userSession = request.getSession();
-
+    
     // Simulating user login - set session attributes
     if (userSession.getAttribute("username") == null) {
         userSession.setAttribute("username", "Jane Doe");
@@ -16,7 +16,7 @@
         userSession.setAttribute("loginTime", new Date());
         userSession.setAttribute("role", "Patient");
     }
-
+    
     // Track page visits
     Integer visitCount = (Integer) userSession.getAttribute("visitCount");
     if (visitCount == null) {
@@ -25,24 +25,24 @@
         visitCount++;
     }
     userSession.setAttribute("visitCount", visitCount);
-
+    
     // ═══════════════════════════════════════════════════════════
     // COOKIE MANAGEMENT DEMO
     // ═══════════════════════════════════════════════════════════
-
+    
     // Create cookies for user preferences
     Cookie themeCookie = new Cookie("userTheme", "wellness-sage");
     themeCookie.setMaxAge(7 * 24 * 60 * 60); // 7 days
     response.addCookie(themeCookie);
-
+    
     Cookie langCookie = new Cookie("userLanguage", "en-US");
     langCookie.setMaxAge(30 * 24 * 60 * 60); // 30 days
     response.addCookie(langCookie);
-
-    Cookie lastVisitCookie = new Cookie("lastVisit", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+    
+    Cookie lastVisitCookie = new Cookie("lastVisit", new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss").format(new Date()));
     lastVisitCookie.setMaxAge(365 * 24 * 60 * 60); // 1 year
     response.addCookie(lastVisitCookie);
-
+    
     // Read existing cookies
     Cookie[] cookies = request.getCookies();
     Map<String, String> cookieMap = new HashMap<>();
@@ -51,15 +51,15 @@
             cookieMap.put(cookie.getName(), cookie.getValue());
         }
     }
-
+    
     // Format dates
     SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy, hh:mm:ss a");
     Date loginTime = (Date) userSession.getAttribute("loginTime");
     String formattedLoginTime = loginTime != null ? sdf.format(loginTime) : "N/A";
-
+    
     Date sessionCreationTime = new Date(userSession.getCreationTime());
     String formattedCreationTime = sdf.format(sessionCreationTime);
-
+    
     Date lastAccessedTime = new Date(userSession.getLastAccessedTime());
     String formattedLastAccessed = sdf.format(lastAccessedTime);
 %>
@@ -400,7 +400,7 @@
                 <div class="card-icon" style="background: var(--sage-light);">🔐</div>
                 <h2 class="card-title">Session Details</h2>
             </div>
-
+            
             <div class="data-row">
                 <span class="data-label">Session ID</span>
                 <span class="data-value"><%= userSession.getId() %></span>
@@ -433,7 +433,7 @@
                 <div class="card-icon" style="background: #FEF3E2;">👤</div>
                 <h2 class="card-title">User Information</h2>
             </div>
-
+            
             <div class="data-row">
                 <span class="data-label">User ID</span>
                 <span class="data-value highlight"><%= userSession.getAttribute("userId") %></span>
@@ -466,39 +466,39 @@
                 <div class="card-icon" style="background: #FEF0F0;">🍪</div>
                 <h2 class="card-title">Browser Cookies</h2>
             </div>
-
+            
             <table class="cookie-table">
                 <thead>
-                <tr>
-                    <th>Cookie Name</th>
-                    <th>Value</th>
-                    <th>Purpose</th>
-                </tr>
+                    <tr>
+                        <th>Cookie Name</th>
+                        <th>Value</th>
+                        <th>Purpose</th>
+                    </tr>
                 </thead>
                 <tbody>
-                <% if (cookieMap.isEmpty()) { %>
-                <tr>
-                    <td colspan="3" style="text-align: center; color: var(--stone); padding: 2rem;">
-                        No cookies found. Refresh the page to create demo cookies.
-                    </td>
-                </tr>
-                <% } else {
-                    for (Map.Entry<String, String> entry : cookieMap.entrySet()) {
-                        String purpose = "Session Management";
-                        if (entry.getKey().equals("userTheme")) purpose = "User Theme Preference";
-                        else if (entry.getKey().equals("userLanguage")) purpose = "Language Preference";
-                        else if (entry.getKey().equals("lastVisit")) purpose = "Last Visit Tracking";
-                        else if (entry.getKey().contains("JSESSIONID")) purpose = "Session Identifier";
-                %>
-                <tr>
-                    <td><strong><%= entry.getKey() %></strong></td>
-                    <td><%= entry.getValue() %></td>
-                    <td style="color: var(--stone);"><%= purpose %></td>
-                </tr>
-                <%
+                    <% if (cookieMap.isEmpty()) { %>
+                        <tr>
+                            <td colspan="3" style="text-align: center; color: var(--stone); padding: 2rem;">
+                                No cookies found. Refresh the page to create demo cookies.
+                            </td>
+                        </tr>
+                    <% } else { 
+                        for (Map.Entry<String, String> entry : cookieMap.entrySet()) { 
+                            String purpose = "Session Management";
+                            if (entry.getKey().equals("userTheme")) purpose = "User Theme Preference";
+                            else if (entry.getKey().equals("userLanguage")) purpose = "Language Preference";
+                            else if (entry.getKey().equals("lastVisit")) purpose = "Last Visit Tracking";
+                            else if (entry.getKey().contains("JSESSIONID")) purpose = "Session Identifier";
+                    %>
+                        <tr>
+                            <td><strong><%= entry.getKey() %></strong></td>
+                            <td><%= entry.getValue() %></td>
+                            <td style="color: var(--stone);"><%= purpose %></td>
+                        </tr>
+                    <% 
                         }
-                    }
-                %>
+                    } 
+                    %>
                 </tbody>
             </table>
         </div>
@@ -509,7 +509,7 @@
                 <div class="card-icon" style="background: var(--sage-light);">⚙️</div>
                 <h2 class="card-title">Session Actions</h2>
             </div>
-
+            
             <div class="btn-group">
                 <form action="session-demo.jsp" method="post" style="flex: 1;">
                     <button type="submit" class="btn btn-primary" style="width: 100%;">
@@ -526,7 +526,7 @@
             <div class="info-box">
                 <div class="info-box-title">ℹ️ About Sessions</div>
                 <div class="info-box-text">
-                    Sessions store user data on the server and last until the browser closes or the session expires.
+                    Sessions store user data on the server and last until the browser closes or the session expires. 
                     Cookies store data on the client side and can persist across browser sessions.
                 </div>
             </div>
@@ -538,7 +538,7 @@
                 <div class="card-icon" style="background: #FEF3E2;">📊</div>
                 <h2 class="card-title">Technical Details</h2>
             </div>
-
+            
             <div class="data-row">
                 <span class="data-label">Server</span>
                 <span class="data-value">Apache Tomcat</span>

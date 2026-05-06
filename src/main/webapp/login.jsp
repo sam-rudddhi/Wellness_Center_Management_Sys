@@ -357,7 +357,7 @@
             <p class="form-subtitle">Don't have an account? <a href="register.jsp">Create one</a></p>
         </div>
 
-        <form id="loginForm" action="LoginServlet" method="post">
+        <form id="loginForm" action="LoginServlet" method="post" novalidate>
             <!-- Email -->
             <div class="input-group">
                 <label class="input-label" for="email">Email Address</label>
